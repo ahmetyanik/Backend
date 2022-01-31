@@ -1,0 +1,74 @@
+{
+  "database": [
+    {
+      "title": "Hallo",
+      "artist": "Ahmet YAnik",
+      "year": "2021",
+      "image": "https://avatars.githubusercontent.com/u/67186720?v=4",
+      "price": 10
+    },
+    {
+      "title": "Hallo",
+      "artist": "Ahmet YAnik",
+      "year": "2021",
+      "image": "https://avatars.githubusercontent.com/u/67186720?v=4",
+      "price": 10
+    },
+    {
+      "title": "Gülümse",
+      "artist": "Sezen Aksu",
+      "year": "2021",
+      "image": "https://upload.wikimedia.org/wikipedia/en/7/7a/Sezen_Aksu_-_G%C3%BCl%C3%BCmse.png",
+      "price": 10
+    },
+    {
+      "title": "Gülümse",
+      "artist": "Sezen Aksu",
+      "year": "2021",
+      "image": "https://upload.wikimedia.org/wikipedia/en/7/7a/Sezen_Aksu_-_G%C3%BCl%C3%BCmse.png",
+      "price": 10
+    },
+    {
+      "title": "Gülümse",
+      "artist": "Sezen Aksu",
+      "year": "2021",
+      "image": "https://upload.wikimedia.org/wikipedia/en/7/7a/Sezen_Aksu_-_G%C3%BCl%C3%BCmse.png",
+      "price": 10
+    },
+    {
+      "title": "Gülümse",
+      "artist": "Sezen Aksu",
+      "year": "2021",
+      "image": "https://upload.wikimedia.org/wikipedia/en/7/7a/Sezen_Aksu_-_G%C3%BCl%C3%BCmse.png",
+      "price": 10
+    },
+    {
+      "title": "Gülümse",
+      "artist": "Sezen Aksu",
+      "year": "2021",
+      "image": "https://upload.wikimedia.org/wikipedia/en/7/7a/Sezen_Aksu_-_G%C3%BCl%C3%BCmse.png",
+      "price": 10
+    },
+    {
+      "title": "Karma",
+      "artist": "Tarkan",
+      "year": "2021",
+      "image": "https://plakpikap.de/wp-content/uploads/2017/12/Tarkan-Karma-tuerkische-Schallplatte-Plak-2.jpg",
+      "price": 10
+    },
+    {
+      "title": "Kolla",
+      "artist": "Tarkan",
+      "year": "2021",
+      "image": "https://th.bing.com/th/id/R.a00d6bc7e851240bb9169447902c73e3?rik=gBJi8SOK%2ffNOGQ&riu=http%3a%2f%2fim.haberturk.com%2f2017%2f06%2f21%2fver1498028104%2f1537812_940x531.jpg&ehk=mb1tqgKPcnYEDOdt3O%2bOZh6I6t2SBgsbv%2fcvDqEWn1I%3d&risl=&pid=ImgRaw&r=0",
+      "price": 10
+    },
+    {
+      "title": "Yolla",
+      "artist": "Tarkan",
+      "year": "2021",
+      "image": "https://th.bing.com/th/id/R.a00d6bc7e851240bb9169447902c73e3?rik=gBJi8SOK%2ffNOGQ&riu=http%3a%2f%2fim.haberturk.com%2f2017%2f06%2f21%2fver1498028104%2f1537812_940x531.jpg&ehk=mb1tqgKPcnYEDOdt3O%2bOZh6I6t2SBgsbv%2fcvDqEWn1I%3d&risl=&pid=ImgRaw&r=0",
+      "price": 10
+    }
+  ]
+}
