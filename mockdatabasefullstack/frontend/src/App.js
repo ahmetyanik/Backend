@@ -7,6 +7,8 @@ import Top4 from "./components/Top4";
 function App() {
   const [records, setRecords] = useState([]);
   const [top4,setTop4] = useState([]);
+  const [newRecord, setNewRecord] = useState();
+
 
   async function getRecords() {
     const response = await fetch("http://localhost:3005/records");
@@ -26,16 +28,16 @@ function App() {
 
   useEffect(() => {
     getRecords();
-  }, []);
+  }, [newRecord]);
 
   useEffect(() => {
     getRecordsTop4();
-  }, []);
+  }, [newRecord]);
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={<Homepage records={records} />} />
+        <Route exact path="/" element={<Homepage records={records} newRecord={newRecord} setNewRecord={setNewRecord} />} />
         <Route path="/top4" element={<Top4 top4={top4} />} />
       </Routes>
     </BrowserRouter>
