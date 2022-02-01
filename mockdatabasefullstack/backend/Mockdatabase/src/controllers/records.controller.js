@@ -5,7 +5,7 @@ export const getRecords = (req, res) => {
   res.json(database);
 };
 
-export const addRecord = (req, res) => {
+export const controlNewRecord = (req, res, next) => {
   const body = req.body;
 
   const title = body.title;
@@ -13,6 +13,27 @@ export const addRecord = (req, res) => {
   const year = body.year;
   const image = body.image;
   const price = body.price;
+  const id = body.id;
+
+  if (title !== "") {
+    res.send("Merhaba");
+    console.log("Merhaba");
+  }else{
+    res.send("Ikinci")
+    console.log("Ikinci");
+  }
+};
+
+export const addRecord = (req, res) => {  
+
+  const body = req.body;
+
+  const title = body.title;
+  const artist = body.artist;
+  const year = body.year;
+  const image = body.image;
+  const price = body.price;
+  const id = body.id;
 
   const newRecord = {
     title: title,
@@ -20,6 +41,7 @@ export const addRecord = (req, res) => {
     year: year,
     image: image,
     price: price,
+    id: id,
   };
 
   database.unshift(newRecord);
@@ -29,13 +51,9 @@ export const addRecord = (req, res) => {
 };
 
 export const showFour = (req, res) => {
-
-  const filteredElements = database.filter((element,index)=>{
-
-    return index<4;
-
-  })
+  const filteredElements = database.filter((element, index) => {
+    return index < 4;
+  });
 
   res.send(filteredElements);
-
 };

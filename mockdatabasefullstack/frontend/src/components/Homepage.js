@@ -2,22 +2,19 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Cards from "../Cards";
 
-function Homepage({ records,newRecord,setNewRecord }) {
-
-  const [addingRecord,setAddingRecord] = useState({
+function Homepage({ records, setNewRecord }) {
+  const [addingRecord, setAddingRecord] = useState({
     title: "",
     artist: "",
     year: "",
     image: "",
     price: "",
-  })
-
+  });
 
   function inputChange(e) {
     let dataVonInput = e.target.value;
 
     setAddingRecord({ ...addingRecord, [e.target.name]: dataVonInput });
-
   }
 
   function postNewRecord() {
@@ -51,9 +48,9 @@ function Homepage({ records,newRecord,setNewRecord }) {
           );
         })}
       </div>
-      <div className="text-center bold">ADD NEW RECORD</div>
-      <div className="d-flex justify-content-center">
-        <div>
+      <div className="text-center fs-3 pt-5">ADD NEW RECORD</div>
+      <div className="d-flex justify-content-center ">
+        <div className="bg-dark text-light p-5">
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">
               Title
@@ -112,7 +109,9 @@ function Homepage({ records,newRecord,setNewRecord }) {
             />
           </div>
 
-          <button onClick={postNewRecord} class="btn btn-primary">Submit</button>
+          <button onClick={postNewRecord} class="btn btn-primary">
+            Submit
+          </button>
         </div>
       </div>
     </div>
