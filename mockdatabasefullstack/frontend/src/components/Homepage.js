@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Cards from "../Cards";
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 function Homepage({ records, setNewRecord }) {
   const [addingRecord, setAddingRecord] = useState({
     title: "",
@@ -18,7 +20,7 @@ function Homepage({ records, setNewRecord }) {
   }
 
   function postNewRecord() {
-    fetch("http://localhost:3005/records", {
+    fetch(BASE_URL + "/records", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
