@@ -4,21 +4,22 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [users, setUsers] = useState([]);
-  const [postEdilen,setPostEdilen] = useState({});
+  const [yeniUser,setYeniUser] = useState({});
 
   useEffect(() => {
     fetch("http://localhost:3000/users")
       .then((data) => data.json())
       .then((data) => setUsers(data));
-  }, [postEdilen]);
+  }, [yeniUser]);
 
   async function addNewUser(e) {
 
     e.preventDefault();
 
     const name = document.querySelector("#exampleInputEmail1").value;
+    const age = document.querySelector("#exampleInputPassword1").value;
 
-    const newUser = { name: name };
+    const newUser = { name: name, age:parseInt(age) };
 
     await fetch("http://localhost:3000/addUser", {
       method: "POST", // or 'PUT'
@@ -28,7 +29,8 @@ function App() {
       body: JSON.stringify(newUser),
     });
 
-    setPostEdilen(newUser);
+    setYeniUser(newUser);
+
     
   }
 
@@ -36,8 +38,8 @@ function App() {
 
 
   return (
-    <div className="App d-flex justify-content-center flex-wrap">
-      <form onSubmit={addNewUser}>
+    <div className="App d-flex flex-column align-items-center">
+      <form onSubmit={addNewUser} style={{width:"50%"}}>
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">
             Name
@@ -57,7 +59,7 @@ function App() {
             Age
           </label>
           <input
-            type="password"
+            type="number"
             class="form-control"
             id="exampleInputPassword1"
           />
@@ -67,11 +69,12 @@ function App() {
         </button>
       </form>
 
+<div className="d-flex justify-content-center flex-wrap">
       {users.map((user) => {
         return (
-          <div class="card" style={{ width: "18rem" }}>
+          <div class="card m-2" style={{ width: "18rem" }}>
             <div class="card-body">
-              <h5 class="card-title">{user.name}</h5>
+              <h5 class="card-title">{user.name}-{user.age}</h5>
               <p class="card-text">{user.date}</p>
               <a href="#" class="btn btn-primary">
                 Go somewhere
@@ -80,6 +83,7 @@ function App() {
           </div>
         );
       })}
+      </div>
     </div>
   );
 }
