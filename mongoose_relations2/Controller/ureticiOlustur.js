@@ -18,6 +18,8 @@ async function ureticiOlustur(req,res){
   
 }
 
+
+
 module.exports = ureticiOlustur;
 
   

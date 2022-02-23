@@ -11,6 +11,7 @@ const usersRouter = require('./routes/users');
 const yeniUreticiRouter = require("./routes/yeniUretici");
 const yeniUrunRouter = require("./routes/yeniUrun");
 const gelenUrunlerRouter = require("./routes/index");
+const ureticileriGetir = require("./routes/ureticiGetir.routes");
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use('/gelenUrunler', gelenUrunlerRouter);
 app.use('/users', usersRouter);
 app.use("/yeniuretici", yeniUreticiRouter);
 app.use("/yeniurun", yeniUrunRouter);
+app.use("/ureticiGetir", ureticileriGetir);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
