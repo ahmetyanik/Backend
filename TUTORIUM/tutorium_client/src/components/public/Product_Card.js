@@ -1,14 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Product_Card = (props) => {
   return (
     <div className="col-md-3">
-      <a href="#" className="card card-product-grid">
+      <a href={`/urun/${props.id}`} className="card card-product-grid">
         <div className="img-wrap">
-          <img src="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/13.jpg" />
+          <img src={props.resim} />
         </div>
         <div className="info-wrap text-center ">
-          <p className="title text-truncate"></p>
+          <p className="title text-truncate">{props.isim}</p>
           <ul className="rating-stars">
             <li
               style={{ width: `${props.puan * 20}%` }}
@@ -28,10 +29,10 @@ const Product_Card = (props) => {
               <i className="fa fa-star"></i>
             </li>
           </ul>
-          <small className="text-muted"></small>
+          <small className="text-muted">{props.yildizsayisi}</small>
           <div className="price-wrap mt-2 text-center">
-            <span className="price">₺400</span>
-            <del className="price-old">₺600</del>
+            <span className="price">₺{props.ind_fiyat}</span>
+            <del className="price-old">₺{props.normal_fiyat}</del>
           </div>
         </div>
       </a>

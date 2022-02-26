@@ -29,10 +29,18 @@ const HomePage_Popular = () => {
         <div className="row">
 
         {
-          urunler.map(()=>{
-
+          urunler.map((urun)=>{
             return(
-                <Product_Card/>
+                <Product_Card 
+                key={urun._id}
+                isim={urun.isim}
+                yildizsayisi = {urun.yildizsayisi}
+                puan={urun.yildiz.puan}
+                ind_fiyat={urun.ind_fiyat}
+                normal_fiyat={urun.normal_fiyat}
+                resim={urun.resimler.bir}
+                id={urun._id}
+                />
             )
           })
         }

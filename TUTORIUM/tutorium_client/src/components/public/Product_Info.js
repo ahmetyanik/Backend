@@ -10,10 +10,10 @@ const Product_Info = (props) => {
               <a href="/">Anasayfa</a>
             </li>
             <li className="breadcrumb-item">
-              <a href="#">
+              <a href={`/kategori/${props.kategori_url}`}>{props.kategori_isim}
               </a>
             </li>
-            <li className="breadcrumb-item active" aria-current="page">
+            <li className="breadcrumb-item active" aria-current="page">{props.isim}
             </li>
           </ol>
         </nav>
