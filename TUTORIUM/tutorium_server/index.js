@@ -29,8 +29,7 @@ app.get("/", (req, res) => {
   res.send("Baglanti basarili...");
 });
 
-////////////////MONGODB SEMALARI//////
-
+///////// MONGODB ŞEMALARI - BAŞLANGIÇ
 const urunSema = {
   isim: String,
   kategori: String,
@@ -72,15 +71,36 @@ const yorumSema = {
   tarih: String,
   kullanici_id: String,
   yildiz: Number,
+  onay: Number,
   like: Number,
   dislike: Number,
 };
 
-/////////////////MONGODB MODELLERI//////
+const kategoriSema = {
+  kategori_isim: String,
+  kategori_url: String,
+  kategori_aciklama: String,
+};
 
+
+
+const siparisSema = {
+  takip_no: String,
+  tutar: Number,
+  kullanici_id: String,
+  urunler: [],
+  odeme_id: String,
+  tarih: Date,
+  durum: [],
+};
+
+///////// MONGODB ŞEMALARI - BİTİŞ
+
+///////// MONGODB MODELLERİ - BAŞLANGIÇ
 const Urun = mongoose.model("Urun", urunSema);
-
 const Yorum = mongoose.model("Yorum", yorumSema);
+const Kategori = mongoose.model("Kategori", kategoriSema);
+const Siparis = mongoose.model("Siparis", siparisSema);
 
 /////////////////URUN/////////////////
 app.post("/api/urun/olusturma", function (req, res) {
@@ -169,13 +189,40 @@ app.get("/api/urun/benzerurunler/:kategori_url/:urunId", function (req, res) {
     .limit(4);
 });
 
-/////////////////KATEGORI SAYFASI /////////////////////
+/////////////////////////            KATEGORİ SAYFASI           /////////////////////////////
+app.get("/api/kategori/:kategori_url/:bulundugu_sayfa", function (req, res) {
+  var sayfa = req.params.bulundugu_sayfa;
+  var secim = req.query.secim;
+  var markalar =
+    req.query.marka === null || req.query.marka === "" ? "" : req.query.marka;
 
-app.get("/api/kategori/:kategori_url/:bulundugu_sayfa", (req, res) => {
-  const bulundugu_sayfa =
-    req.params.bulundugu_sayfa === "null" ? 1 : req.params.bulundugu_sayfa;
-  let secim = req.query.secim;
-  var sayfa = bulundugu_sayfa;
+  var minFiyat = parseInt(req.query.min);
+  var maxFiyat = parseInt(req.query.max);
+
+  var aramaKriterleri = {
+    kategori_url: req.params.kategori_url,
+  };
+
+  if (markalar !== "") {
+    var bosArray = markalar.split(",");
+    if (bosArray.length > 0) {
+      aramaKriterleri["marka"] = {
+        $in: bosArray,
+      };
+    }
+  }
+
+  if (minFiyat > 0 && maxFiyat === 0) {
+    maxFiyat = 99999999999;
+  }
+
+  if ((minFiyat === 0 && maxFiyat > 0) || (minFiyat > 0 && maxFiyat > 0)) {
+    aramaKriterleri["ind_fiyat"] = {
+      $gt: minFiyat,
+      $lt: maxFiyat,
+    };
+  }
+
   var kriter = {};
 
   if (secim === "1") {
@@ -188,12 +235,11 @@ app.get("/api/kategori/:kategori_url/:bulundugu_sayfa", (req, res) => {
     };
   } else if (secim === "3") {
     kriter = {
-      fiyat: 1,
+      ind_fiyat: 1,
     };
   }
 
-
-  Urun.find({ kategori_url: req.params.kategori_url }, (err, gelenVeri) => {
+  Urun.find(aramaKriterleri, function (err, gelenVeri) {
     if (!err) {
       res.send(gelenVeri);
     } else {
@@ -203,19 +249,48 @@ app.get("/api/kategori/:kategori_url/:bulundugu_sayfa", (req, res) => {
         },
       ]);
     }
-  }).sort(kriter)
+  })
+    .sort(kriter)
     .limit(6)
     .skip((sayfa - 1) * 6);
 });
 
-/////////////////URUN SAYISINI ALMA ///////////////////
+app.get("/api/urunsayisi/:kategori_url", function (req, res) {
+  var markalar =
+    req.query.marka === null || req.query.marka === "" ? "" : req.query.marka;
 
-app.get("/api/urunsayisi/:kategori_url", (req, res) => {
-  var sayfa = req.params.bulundugu_sayfa;
+  var minFiyat = parseInt(req.query.min);
+  var maxFiyat = parseInt(req.query.max);
 
-  Urun.find({ kategori_url: req.params.kategori_url }, (err, gelenVeri) => {
+  var aramaKriterleri = {
+    kategori_url: req.params.kategori_url,
+  };
+
+  if (markalar !== "") {
+    var bosArray = markalar.split(",");
+    if (bosArray.length > 0) {
+      aramaKriterleri["marka"] = {
+        $in: bosArray,
+      };
+    }
+  }
+
+  if (minFiyat > 0 && maxFiyat === 0) {
+    maxFiyat = 99999999999;
+  }
+
+  if ((minFiyat === 0 && maxFiyat > 0) || (minFiyat > 0 && maxFiyat > 0)) {
+    aramaKriterleri["ind_fiyat"] = {
+      $gt: minFiyat,
+      $lt: maxFiyat,
+    };
+  }
+
+  Urun.find(aramaKriterleri, function (err, gelenVeri) {
     if (!err) {
-      res.send({ toplam: gelenVeri.length });
+      res.send({
+        toplam: gelenVeri.length,
+      });
     } else {
       res.send([
         {
@@ -225,6 +300,67 @@ app.get("/api/urunsayisi/:kategori_url", (req, res) => {
     }
   });
 });
+
+app.get("/api/kategori/filtre/marka/:kategori_url", function (req, res) {
+  Urun.distinct("marka", function (err, gelenVeri) {
+    if (!err) res.send(gelenVeri);
+    else res.send(err);
+  });
+});
+
+
+/////////////////////////////   KATEGORİ API     ///////////////
+
+app.post("/api/kategori_bireysel/olustur", function (req, res) {
+  var kategori = new Kategori({
+    kategori_isim: req.body.isim,
+    kategori_url: req.body.url,
+    kategori_aciklama: req.body.aciklama,
+  });
+
+  kategori.save(function (err) {
+    if (!err) {
+      res.send({
+        sonuc: "başarılı",
+      });
+    } else {
+      res.send(err);
+    }
+  });
+});
+
+app.get("/api/kategori_bireysel/:kategori_url", function (req, res) {
+  Kategori.find(
+    { kategori_url: req.params.kategori_url },
+    function (err, gelenVeri) {
+      if (!err) {
+        res.send(gelenVeri);
+      } else {
+        res.send([
+          {
+            sonuc: "hata",
+          },
+        ]);
+      }
+    }
+  );
+});
+
+app.get("/api/kategori_liste", function (req, res) {
+  Kategori.find({}, function (err, gelenVeri) {
+    if (!err) {
+      res.send(gelenVeri);
+    } else {
+      res.send([
+        {
+          sonuc: "hata",
+        },
+      ]);
+    }
+  });
+});
+
+
 
 //////////////// POPULER URUNLER //////////////////////
 
