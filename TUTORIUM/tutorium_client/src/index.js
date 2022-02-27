@@ -7,8 +7,11 @@ import HomePage from "./components/pages/HomePage";
 import LoginPage from "./components/pages/LoginPage";
 import ProductPage from "./components/pages/ProductPage";
 import RegisterPage from "./components/public/RegisterPage";
+import {CookiesProvider} from "react-cookie";
 
 ReactDOM.render(
+  <CookiesProvider>
+
   <BrowserRouter>
     <Routes>
       <Route exact path="/" element={<HomePage />}/>
@@ -19,7 +22,8 @@ ReactDOM.render(
       <Route path="/giris" element={<LoginPage />}/>
         
     </Routes>
-  </BrowserRouter>,
+  </BrowserRouter>
+  </CookiesProvider>,
 
   document.getElementById("root")
 );

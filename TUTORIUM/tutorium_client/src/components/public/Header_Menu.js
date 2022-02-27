@@ -2,6 +2,17 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 const Header_Menu = () => {
+  const [kategoriler, setKategoriler] = useState([]);
+
+  function kategorileriAl() {
+    axios
+      .get("http://localhost:5000/api/kategori_liste")
+      .then(function (gelenVeri) {
+        setKategoriler(gelenVeri.data);
+      });
+  }
+
+  useEffect(kategorileriAl, []);
 
   return (
     <ul className="navbar-nav">
@@ -10,13 +21,15 @@ const Header_Menu = () => {
           <strong>Anasayfa</strong>
         </a>
       </li>
-    
+      {kategoriler.map(function (kategori) {
+        return (
           <li className="nav-item">
-            <a className="nav-link" href="#">
-            
+            <a className="nav-link" href={`/kategori/${kategori.kategori_url}`}>
+              {kategori.kategori_isim}
             </a>
           </li>
-        
+        );
+      })}
     </ul>
   );
 };
